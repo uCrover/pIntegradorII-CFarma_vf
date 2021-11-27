@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewData["Title"] = "Lista de Repartidores";
+}
+
+<div class="container">
+
+
+    <h3 class="text-center font-weight-ligh" style="font-family:Cambria ; color:darkcyan">
+        <i class="fas fa-fw fa-truck-loading"></i>  Lista de Repartidores
+        <i class="fas fa-fw fa-truck-loading"></i>
+    </h3>
+    <br />
+    <br />
+
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col" class="text-center">Codigo</th>
+                <th scope="col" class="text-center">Nombres</th>
+                <th scope="col" class="text-center">Correo</th>
+                <th scope="col" class="text-center">Eliminar</th>
+</thead>
+        <tbody>
+            @foreach (var item in ViewData["lisRep"] as List<Repartidor>)
+            {
+                <tr>
+                    <th scope="row">@Html.DisplayFor(modelItem => item.codrep)</th>
+                    <td>@Html.DisplayFor(modelItem => item.Nom)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Correo)</td>
+                   
+                    <td>
+                        <a asp-controller="Administrador" asp-action="EliminarRepartidor" asp-route-id="@item.codrep">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+
+
+                </tr>
+
+
+            }
+
+        </tbody>
+    </table>
+
+</div>

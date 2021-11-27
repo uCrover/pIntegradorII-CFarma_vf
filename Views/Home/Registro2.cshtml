@@ -1,0 +1,149 @@
+﻿@model CFarma_TemplateN.Models.Cliente
+@{
+    ViewData["Title"] = "Home Page";
+}
+@{
+    ViewData["Title"] = "Registro";
+}
+
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="~/css/estiloFormulario.css" rel="stylesheet" />
+
+
+
+
+<body>
+    <h1 class="font-weight-bold"> Crea tu cuenta gratis</h1>
+    <p class="text-muted mb-5">Ingresa la siguiente informacion para registrarse</p>
+    <main>
+        <form asp-controller="Cliente" asp-action="Registro" class="formulario" id="formulario">
+            <!--Grupo: Nombre-->
+            <div class="formulario__grupo" id="grupo__nombre">
+                <label asp-for="Nom" for="nombre" class="formulario__label"></label>
+                <div class="formulario__grupo-input">
+                                                                            <!-- name="nombre"-->
+                    <input name="nombre" asp-for="Nom" type="text" class="formulario__input form-control" id="nombre" required />
+                    <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    <span asp-validation-for="Nom" class="text-danger"></span>
+
+                </div>
+                <p class="formulario__input-error">El nombre solo puede tener de 4 a 16 caracteres. Solo puede contener números, letras y guión abajo</p>
+            </div>
+
+            <!--Grupo: Apellido-->
+            <div class="formulario__grupo" id="grupo__apellido">
+                <label asp-for="Apellido" for="apellido" class="formulario__label"></label>
+                <div class="formulario__grupo-input">
+                    <!-- name="apellido"-->
+                    <input name="apellido" asp-for="Apellido" type="text" class="formulario__input form-control" id="apellido" required />
+                    <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    <span asp-validation-for="Apellido" class="text-danger"></span>
+
+                </div>
+                <p class="formulario__input-error">Los apellidos solo pueden tener de 5 a 30 caracteres. Solo puede contener números, letras y guión abajo</p>
+            </div>
+
+            <!--onkeydown="if (this.value.length == 8) return false;"-->
+            <!--Grupo: nroDocumento-->
+            <div class="formulario__grupo" id="grupo__nrodoc">
+                <label asp-for="Nrodoc" for="nrodoc" class="formulario__label"></label>
+                <div class="formulario__grupo-input">
+                    <!-- name="nrodoc" -->
+                    <input name="nrodoc" maxlength="8" asp-for="Nrodoc" type="text" class="formulario__input form-control" id="nrodoc" required />
+                    <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                </div>
+                <p class="formulario__input-error">Debe tener 8 dígitos</p>
+                <span asp-validation-for="Nrodoc" class="text-danger"></span>
+            </div>
+
+            <!--Grupo: sexo-->
+            <div class="formulario__grupo" id="grupo__sexo">
+                <label asp-for="Sexo" class="control-label"></label>
+                <select asp-for="Sexo" class="form-control" id="sexo" required>
+                    <option value="">-Seleccione-</option>
+                    <option value="F">Femenino</option>
+                    <option value="M">Masculino</option>
+                </select>
+            </div>
+
+            <!--Grupo: movil-->
+            <div class="formulario__grupo" id="grupo__movil">
+                <label for="movil" class="formulario__label" asp-for="Movil">Celular</label>
+                <div class="formulario__grupo-input">
+                    <!-- name="movil" -->
+                    <input name="movil" type="number" maxlength="9" asp-for="Movil" class="formulario__input form-control" id="movil" required" />
+                    <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                </div>
+                <p class="formulario__input-error">Debe tener 9 dígitos y formato de celular</p>
+            </div>
+
+            <!--Grupo: Correo-->
+            <div class="formulario__grupo" id="grupo__correo">
+                <label for="correo" class="formulario__label" asp-for="Correo"></label>
+                <div class="formulario__grupo-input">
+                    <!-- name="correo" -->
+                    <input name="correo" type="email" asp-for="Correo" class="formulario__input form-control" id="correo" required />
+                    <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    <span asp-validation-for="Correo" class="text-danger"></span>
+                </div>
+                <p class="formulario__input-error">Debe tener formato de correo</p>
+            </div>
+
+            <!--Grupo: Password-->
+            <div class="formulario__grupo" id="grupo__pswd">
+                <label for="pswd" class="formulario__label" asp-for="Pswd"></label>
+                <div class="formulario__grupo-input">
+                    <!-- name="pswd" -->
+                    <input name="pswd" type="password" asp-for="Pswd" class="formulario__input form-control" id="pswd" required />
+                    <i class="formulario__validacion-estado fas fa-times-circle"></i>
+
+                    <span asp-validation-for="Pswd" class="text-danger"></span>
+                </div>
+                <p class="formulario__input-error">La contraseña tiene que ser de 4 a 12 digitos</p>
+            </div>
+
+            <!--Grupo: Password2-->
+            <div class="formulario__grupo" id="grupo__pswd2">
+                <label for="pswd2" class="formulario__label control-label">Repetir contraseña</label>
+                <div class="formulario__grupo-input">
+                    <!--name="pswd2" -->
+                    <input name="pswd2" type="password" class="formulario__input form-control" id="pswd2" required />
+                    <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                </div>
+                <p class="formulario__input-error">Ambas contraseñas deben ser iguales</p>
+            </div>
+
+            <!--Grupo: Términos y Condiciones-->
+            <div class="formulario__grupo" id="grupo__terminos">
+                <label class="formulario__label">
+                    <!--name="terminos"-->
+                    <input name="terminos" class="formulario__checkbox" type="checkbox" id="terminos" required />
+                    Acepto los Términos y Condiciones
+                </label>
+            </div>
+
+            <div class="formulario__mensaje" id="formulario__mensaje">
+                <p>
+                    <i class="fas fa-exclamation-triangle"></i><b>Error:</b>
+                    Por favor, completar correctamente los campos requeridos.
+                </p>
+            </div>
+
+            <div class="formulario__grupo formulario__grupo-btn-enviar">
+                <button type="submit" class="formulario__btn" >Registrar</button>
+                <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">Registro exitoso</p>
+            </div>
+        </form>
+
+    </main>
+
+    <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
+    <script src="~/js/funciones/formulario.js"></script>
+
+</body>
+
+</html>
+
+

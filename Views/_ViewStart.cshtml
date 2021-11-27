@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json;
+
+@{
+    var existUser = @Context.Session.GetString("usuario");
+    Usuario userLog = null;
+
+    if (existUser == null)
+    {
+        Layout = "_Layout";
+    }
+    else
+    {
+        userLog = JsonConvert.DeserializeObject<Usuario>(existUser);
+        if (userLog.idtip == 1)
+        {
+            Layout = "_LayoutAdmin";
+        }
+        if(userLog.idtip == 3)
+        {
+            Layout = "_Layout";
+        }
+        if (userLog.idtip == 2)
+        {
+            Layout = "_LayoutRepartidor";
+
+        }
+
+    }
+}
+

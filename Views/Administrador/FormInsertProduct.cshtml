@@ -1,0 +1,105 @@
+﻿@model CFarma_TemplateN.Models.Producto
+
+@{
+
+
+    ViewData["Title"] = "Insertar Producto";
+    bool estadoCat = false;
+
+    if (ViewData["flEstadoCat"] != null)
+    {
+        estadoCat = true;
+    }
+
+
+
+}
+<!--<script src="~/vendor/jquery/jquery.min.js"></script>
+<link href="~/jquery-ui-1.12.1/jquery-ui.css" rel="stylesheet" />
+<script src="~/jquery-ui-1.12.1/jquery-ui.min.js"></script> --->
+
+<div class="container">
+    <!--Scripts para búsqueda automática-->
+    <script type="text/javascript">
+        $(function () {
+            $("#txtCustomer").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Administrador/AutoComplete',
+                        data: { "prefix": request.term },
+                        type: "POST",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }))
+                        },
+                        error: function (response) {
+                            alert(response.responseText)
+                        },
+                        failure: function (response) {
+                            alert(response.responseText)
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#hfCustomer").val(i.item.val);
+                },
+                minLength: 1
+            });
+        });
+
+    </script>
+
+    <h3 class="text-center font-weight-ligh" style="font-family:Cambria ; color:brown">
+        Registrar Producto <i class="fas fa-prescription-bottle"></i>
+    </h3><br /><br />
+    <div class="container col-md-4">
+        <form asp-controller="Administrador" asp-action="InsertarProducto">
+            <div>
+                <label asp-for="Nom" class="control-label"></label>
+                <input asp-for="Nom" class=" form-control" />
+                <span asp-validation-for="Nom" class="text-danger"></span>
+            </div>
+            <br />
+            <div>
+                <label class="control-label">Sub-Categoría</label>
+
+                <input type="text" class="form-control" id="txtCustomer" name="CategoriaName" />
+                <input type="hidden" class="form-control" id="hfCustomer" name="CategoriaId" /> 
+                <!--   <input asp-for="CodSubc" type="hidden" id="hfCustomer" />
+                <!-- <input type="hidden" value="searchInput.value()"  asp-for="idpt" />
+                <input asp-for="CodSubc" />-->
+            </div>
+            <br />
+            <div>
+                <label asp-for="Precio" class="control-label"></label>
+                <input asp-for="Precio" class=" form-control" />
+                <span asp-validation-for="Precio" class="text-danger"></span>
+            </div><br />
+
+            <div>
+                <label asp-for="Stock" class="control-label"></label>
+                <input asp-for="Stock" class=" form-control" />
+                <span asp-validation-for="Stock" class="text-danger"></span>
+            </div>
+            <br />
+
+            <div style="text-align:center;">
+                <button type="submit" class="btn btn-outline-primary">
+                    <i class="fas fa-upload"></i> Registrar
+                </button>
+            </div>
+
+
+        </form>
+
+    </div>
+
+
+
+
+
+</div>
+
+
+

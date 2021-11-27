@@ -1,0 +1,176 @@
+﻿
+@{
+    ViewData["Title"] = "Productos - Nutrición";
+    if (TempData["error"] is null)
+    {
+        TempData["error"] = "nada";
+    }
+}
+
+<div class="container">
+
+
+    <h3 class="text-center font-weight-ligh" style="font-family:Cambria ; color:darkcyan">
+        Productos - Nutrición <i class="fab fa-nutritionix"></i>
+    </h3>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Minerales
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <!-- <a class="dropdown-item" asp-controller="Administrador" asp-action="ListarTipoProductos" asp-route-id="4005">Magnesio</a>-->
+                        <a class="dropdown-item" asp-controller="Administrador" asp-action="ListarTipoProductos" asp-route-id="4006">Zinc</a>
+                        <a class="dropdown-item" asp-controller="Administrador" asp-action="ListarTipoProductos" asp-route-id="4007">Hierro</a>
+                    </div>
+                </li>
+                <!-- <li class="nav-item dropdown">
+                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                         Multivitamínicos
+                     </a>
+                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                         <a class="dropdown-item" asp-controller="Administrador" asp-action="ListarTipoProductos" asp-route-id="4009">Adu1to Mayor</a>
+                         <a class="dropdown-item" asp-controller="Administrador" asp-action="ListarTipoProductos" asp-route-id="4008">Para Adultosl</a>
+                         <a class="dropdown-item" asp-controller="Administrador" asp-action="ListarTipoProductos" asp-route-id="4010">Para Niños</a>
+                         <a class="dropdown-item" asp-controller="Administrador" asp-action="ListarTipoProductos" asp-route-id="4011">Prenatal</a>
+                     </div>
+                 </li> -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Vitaminas
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" asp-controller="Administrador" asp-action="ListarTipoProductos" asp-route-id="4001">Vitamina A</a>
+                        <!--    <a class="dropdown-item" asp-controller="Administrador" asp-action="ListarTipoProductos" asp-route-id="4002">Vitamina B</a>
+                        <a class="dropdown-item" asp-controller="Administrador" asp-action="ListarTipoProductos" asp-route-id="4003">Vitamina C</a>-->
+                        <a class="dropdown-item" asp-controller="Administrador" asp-action="ListarTipoProductos" asp-route-id="4004">Vitamina D</a>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+</div>
+
+@{
+    var flEstado = ViewData["listaTipoProducto"];
+
+    if (flEstado != null)
+    {
+        <h5 class="text-center font-weight-ligh" style="font-family:Cambria ; color:darkcyan">
+            @ViewData["nombreSupraCat"] >
+            @ViewData["nombreCategoria"] >
+            <b>@ViewData["nombreSubcategoria"] </b>
+        </h5>
+        <h6><a asp-controller="Administrador" asp-action="VisAddNuevProd" asp-route-nomSubc="@ViewData["nombreSubcategoria"]"><button type="button" class="btn btn-success">Añadir producto</button></a></h6>
+
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col" class="text-center">Imagen</th>
+                    <th scope="col" class="text-center">Codigo</th>
+                    <th scope="col" class="text-center">Nombre</th>
+                    <th scope="col" class="text-center">Precio</th>
+                    <th scope="col" class="text-center">Stock</th>
+                    <th scope="col" class="text-center">Editar</th>
+                    <th scope="col" class="text-center">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewData["listaTipoProducto"] as List<Producto>)
+                {
+                    <tr>
+                        <td>
+                            <img src="~/img/PRODUCTOS/@item.imagen"
+                                 width="60" height="70" onerror="src='/img/sinImagen.jpg'" />
+                        </td>
+                        <td scope="row">@Html.DisplayFor(modelItem => item.idpt)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Nom)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Precio)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Stock)</td>
+                        <td>
+                            <a asp-controller="Administrador" asp-action="VistaEditarProducto" asp-route-id="@item.idpt">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a onclick="confirmarDelete(@item.idpt)">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+
+
+                    </tr>
+
+
+                }
+
+            </tbody>
+        </table>
+    }
+
+}
+
+<script type="text/javascript">
+
+    function confirmarDelete(id) {
+        swal({
+            title: "Eliminar",
+            text: "¿Está seguro de eliminar el producto con id: " + id,
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+
+                if (willDelete) {
+                    window.location.href = "/Administrador/EliminarProducto?id=" + id;
+
+                    /* swal("Eliminado correctamente", {
+                         icon: "success",
+
+                     });*/
+                } else {
+
+                    //swal("No c eliminó");
+
+                }
+            });
+
+    }
+
+
+</script>
+
+@{
+    if (@TempData["error"].Equals("failure"))
+    {
+        <script type="text/javascript">
+
+            swal({
+                title: "No se pudo eliminar",
+                text: "El producto seleccionado tiene pedidos registrados",
+                icon: "warning",
+            })
+
+        </script>
+
+
+    }
+    if (@TempData["error"].Equals("success"))
+    {
+        <script type="text/javascript">
+
+            swal({
+                title: "Eliminación exitosa",
+                text: "El producto seleccionado ha sido eliminado",
+                icon: "success",
+            })
+
+        </script>
+    }
+}

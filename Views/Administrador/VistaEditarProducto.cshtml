@@ -1,0 +1,64 @@
+﻿@model CFarma_TemplateN.Models.Producto
+@{
+
+    ViewData["Title"] = "Editar Producto";
+}
+
+
+<form asp-controller="Administrador" asp-action="ListarTipoProductos" asp-route-id=" @ViewData["idSubCat"]"> 
+    <button class="btn btn-success" type="submit"> <i class="fas fa-backward"></i> Regresar</button>
+</form>
+
+<h3 class="text-center font-weight-ligh" style="font-family:Cambria ; color:darkcyan">
+
+    <img src="~/img/vitaminass.jpg" width="50" height="50" />
+    @ViewData["nombreSupraCat"]>@ViewData["nombreCategoria"]> <b>@ViewData["nombreSubcategoria"] </b>
+    <img src="~/img/vitaminass.jpg" width="50" height="50" />
+</h3>
+<h4 class="text-center font-weight-ligh" style="font-family:Cambria ; color:darkgreen">
+    Editar producto
+</h4>
+
+<div class="container col-md-9">
+    <div class="container">
+        <img src="~/img/PRODUCTOS/@ViewData["imgProducto"]" width="150" height="120" onerror="src='/img/sinImagen.jpg'"
+             class="mx-auto d-block" />
+    </div>
+
+
+    <form asp-controller="Administrador" asp-action="EditProduct" enctype="multipart/form-data">
+        <input type="hidden" asp-for="idpt" />
+        <input type="hidden" asp-for="CodSubc" />
+        <input type="hidden" asp-for="imagen" />
+        <!--    <div asp-validation-summary="ModelOnly" class="text-danger"> -->
+        <div class="form-group">
+            <strong><label asp-for="Nom" class="control-label"></label></strong>
+            <input asp-for="Nom" class=" form-control" required />
+            <span asp-validation-for="Nom" lass="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <strong><label asp-for="Precio" class="control-label"></label></strong>
+            <input asp-for="Precio" class=" form-control" required/>
+            <span asp-validation-for="Precio" lass="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <strong><label asp-for="Stock" class="control-label"></label></strong>
+            <input type="number" asp-for="Stock" class=" form-control" required />
+            <span asp-validation-for="Stock" lass="text-danger"></span>
+        </div>
+
+        <label asp-for="Descripcion1" class="control-label"></label>
+        <input asp-for="Descripcion1" class="form-control" required />
+        <span asp-validation-for="Descripcion1" class="text-danger"></span>
+
+        <label class="control-label">Imagen</label>
+        <input type="file" name="archivo" id="archivo" class="form-control" />
+
+        <div style="text-align:center;">
+            <button type="submit" class="btn btn-outline-primary">
+                <i class="fas fa-sync-alt"></i> Actualizar
+            </button>
+        </div>
+
+    </form>
+</div>

@@ -1,0 +1,622 @@
+﻿@using System.Web.Optimization
+@{
+    // Since Address isn't a string, it requires a cast.
+    var listaCategorias = ViewData["listaCategorias"];
+
+    }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - C'Farma</title>
+    <!-- Links otros -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    @*Font Awesome*@
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+          rel="stylesheet" />
+    @*Google Fonts*@
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+          rel="stylesheet" />
+    @*MDB*@
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.css"
+          rel="stylesheet" />
+
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+        <!-- <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>-->
+    </environment>
+
+    <environment exclude="Development">
+        <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+        <!-- <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>-->
+    </environment>
+
+    @*<link rel="shortcut icon" href="img/favicon.ico">*@
+    <link rel="shortcut icon" href="~/img/favicon.ico" />
+    <!-- Font -->
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,400italic,900,700,700italic,300' rel='stylesheet' type='text/css'>
+    <!--  <link href='http://fonts.googleapis.com/css?family=Cantata+One' rel='stylesheet' type='text/css' />
+     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700,600' rel='stylesheet' type='text/css'>
+     <link href='http://fonts.googleapis.com/css?family=Ubuntu:400,300,500,700' rel='stylesheet' type='text/css'>-->
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+
+    <!-- Magnific Popup -->
+    <link href="~/css/magnific-popup.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/normalize.css">
+    <link rel="stylesheet" href="~/css/skin-lblue.css">
+
+    <link rel="stylesheet" href="~/css/ecommerce.css">
+
+    <!-- Owl carousel -->
+    <link href="~/css/owl.carousel.css" rel="stylesheet">
+
+    <link href="~/css/main.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/css/responsive.css">
+    <link rel="stylesheet" type="text/css" href="~/css/revolutionslider_settings.css" media="screen" />
+
+    <script src="~/js/vendor/modernizr-2.6.2.min.js"></script>
+    <script src="~/js/funciones/MisFunciones.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+</head>
+<body>
+    @using Microsoft.AspNetCore.Http
+    @using Newtonsoft.Json;
+
+    @{
+        var existeUser = @Context.Session.GetString("usuario");
+
+
+        Usuario userLogeado = null;
+
+        if (existeUser != null)
+        {
+            userLogeado = JsonConvert.DeserializeObject<Usuario>(existeUser);
+        }
+    }
+
+
+    <!-- start header -->
+    <header>
+
+        <!--Script de Autocomplete-->
+        <script type="text/javascript">
+            $(function () {
+                $("#txtCustomer").autocomplete({
+                    source: function (request, response) {
+                        $.ajax({
+                            url: '/Administrador/AutoComplete',
+                            data: { "prefix": request.term },
+                            type: "POST",
+                            success: function (data) {
+                                response($.map(data, function (item) {
+                                    return item;
+                                }))
+                            },
+                            error: function (response) {
+                                alert(response.responseText)
+                            },
+                            failure: function (response) {
+                                alert(response.responseText)
+                            }
+                        });
+                    },
+                    select: function (e, i) {
+                        $("#hfCustomer").val(i.item.val);
+                    },
+                    minLength: 1
+                });
+            });
+
+        </script>
+        <!-- Top bar starts -->
+        <div class="top-bar">
+            <div class="container">
+
+                <!-- Contact starts -->
+                <div class="tb-contact pull-left">
+                    <!-- Email -->
+                    <i class="fa fa-envelope color"></i> &nbsp; <a href="cfarma@gamil.com"> <font color='black'>cfarma@gmail.com </font></a>
+                    &nbsp;&nbsp;
+                    <!-- Phone -->
+                    <i class="fa fa-phone color"></i> &nbsp;<font color='black'> 981 514 158 - 991 590 551 </font>
+                </div>
+                <!-- Contact ends -->
+                <!-- Shopping kart starts -->
+                <div class="tb-shopping-cart pull-right">
+                    <!-- Link with badge -->
+                    <a href="#" class="btn btn-white btn-xs b-dropdown"><i class="fa fa-shopping-cart"></i> <i class="fa fa-angle-down color"></i> <span class="badge badge-color" id="txtCantCarrito">0</span></a>
+                    <!-- Dropdown content with item details -->
+                    <div class="b-dropdown-block">
+                        <!-- Heading -->
+                        <h4><i class="fa fa-shopping-cart color"></i> Tu carrito</h4>
+                        <ul class="list-unstyled" id="listCarrito">
+                        </ul>
+                        <a asp-area="" asp-controller="Carrito" asp-action="Index" class="btn btn-white btn-sm">Ver Carrito</a> &nbsp;
+                        <!--  Acá iba el arroba
+                                                {
+
+                                if (existeUser == null)
+                                {
+
+                                    <a href="/Home/Logueo" class="btn btn-color btn-sm">Finalizar Compra</a>
+                                }
+                                else
+                                {
+                        <a href="/Carrito/confirm" class="btn btn-color btn-sm">Finalizar Compra</a>
+                                }
+
+                            }-->
+
+                    </div>
+                </div>
+                <!-- Shopping kart ends -->
+                <!-- Search section for responsive design -->
+                <div class="tb-search pull-left">
+                    <a href="#" class="b-dropdown"><i class="fa fa-search square-2 rounded-1 bg-color white"></i></a>
+                    <div class="b-dropdown-block">
+                        <form>
+                            <!-- Input Group -->
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Type Something">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-color" type="button">Search</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- Search section ends -->
+
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <!-- Top bar ends -->
+        <!-- Header One Starts -->
+
+
+        <div class="header-1">
+
+            <!-- Container -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4">
+                        <!-- Logo section -->
+                        <div class="logo">
+                            <h1 class="fw-bold "><a asp-area="" asp-controller="Home" asp-action="Index"><img src='~/img/cfarma.png' width=50 height=50> C'Farma</a></h1>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-md-offset-2 col-sm-5 col-sm-offset-3 hidden-xs">
+                        <!-- Search Form -->
+                        <div class="header-search">
+                            <form>
+                                <!-- Input Group -->
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Escribe nombre del producto ..." id="txtCustomer" name="txtCustomer" /><!--nomProducto-->
+                                    <input type="hidden" class="form-control" id="hfCustomer" name="hfCustomer" /> <!--IDProducto-->
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-color" type="button" onclick="busProducto()">Buscar</button>
+                                    </span>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Navigation starts -->
+
+            <div class="navi">
+                <div class="container">
+                    <div class="navy">
+
+                        <ul>
+
+                            <!-- Main menu -->
+                            <li>
+                                <a href="#" class="fs-6">Nutrición</a>
+                                <!-- Submenu -->
+                                <ul>
+                                    <li>
+                                        <a href="#">Minerales</a> <!-- Categoria -->
+                                        <ul>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4007">Hierro</a></li>
+                                            <!--   <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4005">Magnesio</a></li>-->
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4006">Zinc</a></li>
+                                        </ul>
+                                    </li>
+                                    <!-- <li>
+                                        <a href="#">Multivitamínicos</a>  Categoria
+                                        <ul>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4009">Adu1to Mayor</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4008">Para Adultos</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4010">Para Niños</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4011">Prenatal</a></li>
+                                        </ul>
+                                    </li>-->
+                                    <li>
+                                        <a href="#">Vitaminas</a> <!-- Categoria -->
+                                        <ul>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4001">Vitamina A</a></li>
+                                            <!--  <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4002">Vitamina B</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4003">Vitamina C</a></li>-->
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4004">Vitamina D</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="#" class="fs-6">Infantil</a>
+                                <ul>
+                                    <li>
+                                        <a href="#">Aseo</a> <!-- Categoria -->
+                                        <ul>
+                                            <!--   <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4018">Crema dental infantil</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4021">Crema humectantes2</a></li>-->
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4019">Jabon para niños</a></li>
+                                            <!--    <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4017">Shampoo para niños</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4022">Talcos</a></li>-->
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4023">Toallitas</a></li>
+                                            <!--  <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4020">Tratamiento escaldadura</a></li>-->
+                                        </ul>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">Pañales para bebé</a> <!-- Categoria -->
+                                        <ul>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4012">Recién nacidos</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4014">Talla G-L</a></li>
+                                            <!--   <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4013">Talla M</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4015">Talla XG-XL</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4016">Talla XXG-XXL</a></li>-->
+                                        </ul>
+                                    </li>
+                                    <!--
+                                    <li>
+                                        <a href="#">Vitaminas y suplementos</a> Categoria
+                                        <ul>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4027">Ácido fólico</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4028">Biotina</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4026">Calcio</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4029">Hierro</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4025">Multivitamínico para bebés</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4024">Multivitamínico prenatal</a></li>
+                                        </ul>
+                                    </li> -->
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="#" class="fs-6">Cuidado Personal</a>
+                                <ul>
+                                    <li>
+                                        <a href="#">Baño</a> <!-- Categoria -->
+                                        <ul>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4033">Acondicionador</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4034">Jabones</a></li>
+                                            <!-- <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4035">Shampoo</a></li>-->
+                                        </ul>
+                                    </li>
+                                    <!--     <li>
+                                                <a href="#">Cuidado bucal</a>
+                                                                        <ul>
+                                                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4037">Cepillos</a></li>
+                                                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4039">Crema dental</a></li>
+                                                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4038">Enjuagues</a></li>
+                                                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4040">Hilo dental</a></li>
+                                                                        </ul>
+                                    </li>
+                                                                          <li>
+                                            <a href="#">Cuidado íntimo</a>  Categoria
+                                                                      <ul>
+                                                                          <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4032">Toallas íntimas</a></li>
+                                                                      </ul>
+                                                                      <li>
+                                                                            <a href="#">Cuidado Piel</a>
+                                                                            <ul>
+                                                                                <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4030">Bloqueador solar</a></li>
+                                                                                <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4031">Repelentes</a></li>
+                                                                            </ul>
+                                        </li>-->
+                                    <li>
+                                        <a href="#">Desodorantes</a>
+                                        <ul>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4041">Hombre</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4042">Mujer</a></li>
+                                        </ul>
+                                    </li>
+                                    <!--   <li>
+                                    <a href="#">Bienestar Sexual</a>
+                                                            <ul>
+                                                                <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4036">Preservativos</a></li>
+                                                            </ul>
+                                                            <li>
+                                                        </ul>
+                                                            </li>Categoria -->
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" class="fs-6">Salud</a>
+                                <ul>
+                                    <!-- <li>
+                                        <a href="#">Problemas dérmicos</a> - Categoria: 5014
+                                        <ul>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4051">Antibióticos</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4053">Antimicóticos</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4052">Cicatrizantes</a></li>
+                                        </ul>
+                                    </li>-->
+                                    <li>
+                                        <a href="#">Problemas digestivos</a> <!-- Categoria: 5013 -->
+                                        <ul>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4049">Antiácidos</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4048">Antibióticos</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4050">Antiflatulentos</a></li>
+                                            <!--   <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4046">Antihemorroidales</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4043">Antiparasitario</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4047">Digestivo</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4044">Laxantes</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4045">Reposición de electrolitos</a></li>-->
+                                        </ul>
+                                    </li>
+                                    <!-- <li>
+                                        <a href="#">Problemas hormonales</a>
+                                        <ul>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4061">Insulinas</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4060">Tiroides</a></li>
+                                        </ul>
+                                    </li>-->
+                                    <li>
+                                        <a href="#">Problemas respiratorios</a>
+                                        <ul>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4054">Antigripales</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4056">Dolor de garganta</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4055">Tos y frío</a></li>
+                                        </ul>
+                                    </li>
+                                    <!-- <li>
+                                        <a href="#">Problemas sanguíneos</a>
+                                        <ul>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4057">Antianémicos</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4058">Anticoagulantes</a></li>
+                                            <li><a asp-controller="Producto" asp-action="ListarTipoProducto" asp-route-id="4059">Antihemorrágicos</a></li>
+                                        </ul>
+                                    </li> -->
+                                </ul>
+                            </li>
+
+                            @{
+                                if (userLogeado != null)
+                                {
+                                    <li>
+                                        <a href="#" class="fs-6">Mis Pedidos</a>
+                                        <ul>
+                                            <li><a href="/Pedidos/">Historial</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="fs-6">@userLogeado.nombre @userLogeado.apellido</a>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation ends -->
+
+        </div>
+
+        <!-- Header one ends -->
+
+    </header>
+    @*<div class="col-lg-6 d-flex ">*@
+
+    <p class="text-end">
+        @{
+            if (userLogeado == null)
+            {
+                <a a class="fw-bold text-dark" asp-area="" asp-controller="Home" asp-action="Logueo">
+                    <img src="~/img/loginn.png" width=31 height=31 /> Iniciar sesión
+                </a>
+                <a class="fw-bold text-dark" asp-controller="Home" asp-action="Registro2">
+                    <img src="~/img/registrarr.png" width=25 height=25 />Registrar
+                </a>
+            }
+            else
+            {
+                <a a class="fw-bold text-dark" asp-area="" asp-controller="Home" asp-action="logout">
+                    <img src="~/img/loginn.png" width=31 height=31 /> Cerrar Sesión
+                </a>
+            }
+        }
+    </p>
+
+
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    CargarCarrito();
+                });
+            </script>
+
+        </main>
+    </div>
+
+
+
+    <footer class="bg-warning text-center text-white">
+        <!-- Grid container -->
+        <div class="container p-4">
+            <!-- Section: Social media -->
+            <section class="mb-4">
+                <p class="pt-2"><strong>¡Síguenos en nuestro Facebook!</strong></p>
+                <!-- Facebook -->
+                <a class="btn btn-outline-light btn-floating m-1" href="https://www.facebook.com/CFARMALIMA" role="button">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+
+
+
+            </section>
+            <!-- Section: Social media -->
+            <!-- Section: Form -->
+            <section class="">
+                <form action="">
+                    <!--Grid row-->
+                    <div class="row d-flex justify-content-center">
+                        <!--Grid column-->
+                        <div class="col-auto">
+                            <p class="pt-2">
+                                <strong>¡Deja tu correo para que te mandemos las últimas novedades!</strong>
+                            </p>
+                        </div>
+                        <!--Grid column-->
+                        <!--Grid column-->
+                        <div class="col-md-5 col-12">
+                            <!-- Email input -->
+                            <div class="form-outline form-white mb-4">
+                                <input type="email" id="form5Example2" class="form-control" />
+                                <label class="form-label" for="form5Example2">Correo Electrónico</label>
+                            </div>
+                        </div>
+                        <!--Grid column-->
+                        <!--Grid column-->
+                        <div class="col-auto">
+                            <!-- Submit button -->
+                            <button type="submit" class="btn btn-outline-light mb-4">
+                                Subscribirme
+                            </button>
+                        </div>
+                        <!--Grid column-->
+                    </div>
+                    <!--Grid row-->
+                </form>
+            </section>
+            <!-- Section: Form -->
+            <!-- Section: Links -->
+            <section class="">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <!--Grid column-->
+                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                            <b><p class="text-uppercase light-text fs-6">Tienda Online</p></b>
+                            <div class="container">
+                                <ul class="list-unstyled mb-0">
+                                    <!--Comentarlo-->
+                                    <li>
+                                        <a href="#!" class="text-white">Términos y Condiciones</a>
+                                    </li>
+                                    <li>
+                                        <a href="#!" class="text-white">Políticas de Privacidad</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                        <!--Grid column-->
+                        <!--Grid column-->
+                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                            <b><p class="text-uppercase light-text fs-6">Contáctanos</p></b>
+
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    <a href="#!" class="text-white">Quejas y Sugerencias</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Libro de Reclamaciones</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Zona de cobertura</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <!--Grid column-->
+                    </div>
+
+                    <!--Grid row-->
+                </div>
+            </section>
+            <!-- Section: Links -->
+        </div>
+        <!-- Grid container -->
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2021 Copyright C'Farma
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
+
+    <script type="text/javascript">
+        function busProducto() {
+            var inputValue = document.getElementById("hfCustomer").value;
+            console.log("enivará: " + inputValue);
+            if (inputValue) {
+                window.location.href = "/Producto/DetalleProducto?id=" + inputValue;
+            }
+            else {
+                swal({
+                    title: "No existe",
+                    text: "El nombre del producto descrito no existe",
+                    icon: "warning",
+                })
+            }
+
+        };
+    </script>
+
+
+    <!-- All script
+    <script src="~/js/vendor/jquery-1.10.2.min.js"></script>-->
+    <!--sccript para autocomplete-->
+    <script src="~/js/vendor/jquery-1.10.2.min.js"></script>
+    <link href="~/jquery-ui-1.12.1/jquery-ui.css" rel="stylesheet" />
+    <script src="~/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+
+
+
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/smoothscroll.js"></script>
+    <!-- Scroll up js
+    ============================================ -->
+    <script src="~/js/jquery.scrollUp.js"></script>
+    <script src="~/js/menu.js"></script>
+    <!-- new collection section script -->
+    <script src="~/js/swiper/idangerous.swiper.min.js"></script>
+    <script src="~/js/swiper/swiper.custom.js"></script>
+    <!--YA ESTÁ VALIDADO ARRIBA-->
+    <!-- <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>-->
+    <!-- Magnific Popup -->
+    <script src="~/js/jquery.magnific-popup.min.js"></script>
+
+    <script src="~/js/jquery.countdown.min.js"></script>
+
+    <!-- SLIDER REVOLUTION SCRIPTS  -->
+    <script type="text/javascript" src="~/rs-plugin/js/jquery.themepunch.plugins.min.js"></script>
+    <script src="~/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+    <!-- Owl carousel -->
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/main.js"></script>
+    @RenderSection("Scripts", required: false)
+
+
+</body>
+</html>

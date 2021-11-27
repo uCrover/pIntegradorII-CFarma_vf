@@ -1,0 +1,74 @@
+﻿
+
+@{
+    ViewData["Title"] = "Pedidos - Detalle";
+    List<Carrito> carrito = ViewData["listaDetalle"] as List<Carrito>;
+    Pedido p = ViewData["pedido"] as Pedido;
+}
+
+
+
+<h3 class="text-center font-weight-ligh" style="font-family:Cambria ; color:darkcyan">
+    Detalle Pedido <i class="far fa-eye"></i>
+</h3>
+<div class="p-2">
+    <a class="button button-green" asp-controller="Repartidor" asp-action="VisLisTipoPedidos" asp-route-codRep="@ViewData["codRep2"]" asp-route-tipoPed="@p.idestado">
+        <i class="fas fa-long-arrow-alt-left"> Regresar</i>
+    </a>
+    <br />
+    <h6>Fecha : @p.fecha</h6>
+    <h6>Lugar Envio : @p.lugar_envio</h6>
+
+    <table class="table mt-2">
+        <thead>
+            <tr>
+
+                <th scope="col">#</th>
+                <th scope="col">Imagen</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int cuenta = 0;
+                decimal impTotal = 0;
+                foreach (var item in carrito)
+                {
+                    impTotal = impTotal + item.Total();
+                    cuenta++;
+                    <tr>
+                        <td>@cuenta</td>
+                        <td>
+                            <img src="~/img/PRODUCTOS/@item.imagen"
+                                 width="60" height="70" onerror="src='/img/sinImagen.jpg'" />
+                        <td>@item.Nom</td>
+                        <td>s/@item.Precio</td>
+                        <td>@item.cantidad</td>
+                        <td>@item.Total()</td>
+
+                    </tr>
+                }
+
+                if (cuenta == 0)
+                {
+                    <tr>
+                        <td colspan="6">No se encontraron productos</td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5">
+                            <strong>Importe Total</strong>
+                        </td>
+                        <td>s/@impTotal</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+

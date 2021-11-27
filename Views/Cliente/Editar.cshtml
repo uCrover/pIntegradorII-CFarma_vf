@@ -1,0 +1,62 @@
+﻿@model CFarma_TemplateN.Models.Cliente
+@{
+    ViewData["Title"] = "Editar contacto";
+}
+
+<div class="container col-md-4">
+    <h1>Editar contacto</h1>
+    <form asp-controller="Cliente" asp-action="Editar2">
+        <input type="hidden" asp-for="codc"/>
+        <div>
+            <label asp-for="Nom" class="control-label"></label>
+            <input asp-for="Nom" class=" form-control" />
+            <span asp-validation-for="Nom" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="Apellido" class="control-label"></label>
+            <input asp-for="Apellido" class=" form-control" />
+            <span asp-validation-for="Apellido" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="Nrodoc" class="control-label"></label>
+            <input asp-for="Nrodoc" class=" form-control" />
+            <span asp-validation-for="Nrodoc" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="Sexo" class="control-label"></label>
+            <select asp-for="Sexo" class=" form-control">
+                <option>-Seleccione-</option>
+                <option value="F">Femenino</option>
+                <option value="M">Masculino</option>
+            </select>
+
+        </div>
+
+        <div>
+            <label asp-for="Movil" class="control-label"></label>
+            <input asp-for="Movil" class=" form-control" />
+            <span asp-validation-for="Movil" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="Correo" class="control-label"></label>
+            <input asp-for="Correo" class=" form-control" />
+        </div>
+
+        <div>
+            <label asp-for="Pswd" class="control-label"></label>
+            <input asp-for="Pswd" class=" form-control" />
+        </div>
+
+        <div style="text-align:center;">
+            <button type="submit" class="btn btn-outline-primary">Registrar</button>
+        </div>
+
+
+    </form>
+
+</div>
+

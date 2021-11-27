@@ -1,0 +1,93 @@
+﻿@{
+    ViewData["Title"] = "Mis Pedidos";
+    List<Pedido> pedidos = ViewData["listaPedidos"] as List<Pedido>;
+}
+
+
+
+<div style="background-color:azure"><h2 class="text-center"> Mis Pedidos</h2> </div>
+<h6>
+    <i style="color:chocolate" class="far fa-pause-circle fa-1x"></i> Pedido Pendiente
+    <i style="color:chartreuse" class="fas fa-clipboard-check fa-1x"></i> Pedido Entregado
+    <i style="color:brown" class="far fa-window-close fa-1x"></i> Pedido Cancelado
+</h6>
+<h6>
+    <i style="color:brown" class="fas fa-window-close fa-1x"></i> Cancelar Pedido
+    <i style="color:black" class="fas fa-lock fa-1x"></i> Acción Deshabilitada
+</h6>
+<div class="p-2 text-center">
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th scope="col">N° Pedido</th>
+                <th scope="col">Fecha </th>
+                <th scope="col">Estado</th>
+                <th scope="col">Total</th>
+                <th scope="col">Ver</th>
+                <th scope="col">Cancelar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int cuenta = 0;
+                foreach (var item in pedidos)
+                {
+                    cuenta++;
+                    <tr>
+                        <td>@cuenta</td>
+                        <td>@item.fecha</td>
+
+                        @{
+
+                            if (@item.idestado == 40)
+                            {
+                                <td><i style="color:chocolate" class="far fa-pause-circle fa-1x"></i></td>
+
+                            }
+                            if (@item.idestado == 41)
+                            {
+                                <td><i style="color:chartreuse" class="fas fa-clipboard-check fa-1x"></i></td>
+
+                            }
+                            if (@item.idestado == 42)
+                            {
+                                <td><i style="color:brown" class="far fa-window-close fa-1x"></i></td>
+
+                            }
+                        }
+
+
+
+                        <td>s/@item.total</td>
+                        <td>
+                            <a asp-controller="Pedidos" asp-action="Detalle" asp-route-idPedido="@item.idp"><i class="far fa-eye fa-1x"></i></a>
+
+                        </td>
+                        @{
+                            if (@item.idestado == 40)
+                            {
+                                <td>
+                                    <a asp-controller="Pedidos" asp-action="CancelarPedido" asp-route-idPedido="@item.idp">
+                                        <i style="color:brown" class="fas fa-window-close fa-1x"></i>
+                                    </a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td><i style="color:black" class="fas fa-lock fa-1x"></i></td>
+                            }
+                        }
+                    </tr>
+                }
+
+                if (cuenta == 0)
+                {
+                    <tr>
+                        <td colspan="6">No se encontraron pedidos registrados</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+</div>

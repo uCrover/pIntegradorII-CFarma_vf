@@ -1,0 +1,57 @@
+﻿@model CFarma_TemplateN.Models.Producto
+
+@{
+    ViewData["Title"] = "Añadir productos";
+
+}
+
+<form asp-controller="Administrador" asp-action="ListarTipoProductos" asp-route-id=" @ViewData["idSubCat"]">
+    <button class="btn btn-success" type="submit"> <i class="fas fa-backward"></i> Regresar a listado de productos</button>
+</form>
+
+<h4 class="text-center font-weight-ligh" style="font-family:Cambria ; color:brown">
+    <i class="fas fa-upload"></i> Añadir producto <i class="fas fa-capsules"></i>
+</h4>
+
+<div class="container-fluid col-7">
+    <form asp-controller="Administrador" asp-action="AddNewProduct" enctype="multipart/form-data">
+
+        <div>
+            <label asp-for="Nom" class="control-label"></label>
+            <input asp-for="Nom" class=" form-control" required />
+            <span asp-validation-for="Nom" class="text-danger"></span>
+        </div>
+        <br />
+
+        <label class="control-label">Subcategoria</label>
+        <input value="@ViewData["nomSubCat"]" disabled />
+        <input type="hidden" asp-for="CodSubc" value="@ViewData["idSubCat"]" />
+        <br />
+
+        <label asp-for="Precio" class="control-label"></label>
+        <input asp-for="Precio" id="precioProduct" class="form-control" required />
+        <span asp-validation-for="Precio" class="text-danger"></span>
+        <br />
+
+        <label asp-for="Stock" class="control-label"></label>
+        <input type="number" asp-for="Stock" class="form-control" required />
+        <span asp-validation-for="Stock" class="text-danger"></span>
+        <br />
+
+        <label asp-for="Descripcion1" class="control-label"></label>
+        <input asp-for="Descripcion1" class="form-control" required />
+        <span asp-validation-for="Descripcion1" class="text-danger"></span>
+
+        <label asp-for="imagen" class="control-label">Imagen</label>
+        <input type="file" name="archivo" id="archivo" class="form-control" required />
+
+        <div style="text-align:center">
+            <button type="submit" class="btn btn-outline-primary">
+                <i class="fas fa-sync-alt"></i> Añadir
+            </button>
+        </div>
+
+
+
+    </form>
+</div>

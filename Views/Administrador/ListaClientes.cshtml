@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewData["Title"] = "Lista de Clientes";
+}
+
+<div class="container">
+
+
+    <h3 class="text-center font-weight-ligh" style="font-family:Cambria ; color:darkcyan">
+        <i class="fas fa-users fa-2x"></i>  Lista de Clientes
+        <i class="fas fa-users fa-2x"></i>
+    </h3>
+    <br />
+    <br />
+
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col" class="text-center">Codigo</th>
+                <th scope="col" class="text-center">Nombres</th>
+                <th scope="col" class="text-center">Nro Documento</th>
+                <th scope="col" class="text-center">Correo</th>
+                <th scope="col" class="text-center">Móvil</th>
+                <th scope="col" class="text-center">Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewData["lisClientes"] as List<Cliente>)
+            {
+                <tr>
+                    <th scope="row">@Html.DisplayFor(modelItem => item.codc)</th>
+                    <td>@Html.DisplayFor(modelItem => item.Apellido), @Html.DisplayFor(modelItem => item.Nom)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Nrodoc)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Correo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Movil)</td>
+
+                    <td>
+                        <a asp-controller="Administrador" asp-action="EliminarCliente" asp-route-id="@item.codc">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+
+
+                </tr>
+
+
+            }
+
+        </tbody>
+    </table>
+
+</div>
+
+<!-- Delete Modal
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">¿Seguro desea eliminar?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Seleccione "Eliminar" si desea eliminar al cliente: item.codc</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                <a class="btn btn-danger" asp-controller="Administrador" asp-action="EliminarCliente" asp-route-id="item.codc">Eliminar</a>
+               
+            </div>
+
+
+        </div>
+    </div>
+</div>-->

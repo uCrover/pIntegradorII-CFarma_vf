@@ -1,0 +1,31 @@
+/** {
+    touch-action: none;
+}*/
+
+
+:root {
+    --color-cabeceraForm: #ffffff;
+    --color-morado: #67299B;
+    --color-celeste: #16C6F5;
+    --color-light: #ffffff;
+    --color-fondoBody: #FFFFFF;
+}
+
+body{
+    font-size:'Reboto',sans-serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    
+    color: var(--color-ligth);
+    letter-spacing: .05rem;
+}
+
+.bg-light{
+    background-color: var(--color-ligth)!important;
+}
+
+.bg-cabeceraRegistro{
+    background-color: var(--color-cabeceraForm)!important;
+}
+
+

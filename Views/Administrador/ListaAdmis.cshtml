@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewData["Title"] = "Lista de Administradores";
+
+}
+
+<div class="container">
+
+
+    <h3 class="text-center font-weight-ligh" style="font-family:Cambria ; color:darkcyan">
+        <i class="fas fa-fw fa-user-shield"></i>  Lista de Administradores
+        <i class="fas fa-fw fa-user-shield"></i>
+    </h3>
+    <br />
+    <br />
+
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col" class="text-center">Codigo</th>
+                <th scope="col" class="text-center">Nombres</th>
+                <th scope="col" class="text-center">Correo</th>
+                <th scope="col" class="text-center">Eliminar</th>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewData["lisAdmi"] as List<Administrador>)
+            {
+                <tr>
+                    <th scope="row">@Html.DisplayFor(modelItem => item.codad)</th>
+                    <td>@Html.DisplayFor(modelItem => item.nomad)</td>
+                    <td>@Html.DisplayFor(modelItem => item.correo)</td>
+
+                    <td>
+                        <a asp-controller="Administrador" asp-action="EliminarAdmi" asp-route-id="@item.codad">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+
+
+                </tr>
+
+
+            }
+
+        </tbody>
+    </table>
+
+
+
+</div>
+
+

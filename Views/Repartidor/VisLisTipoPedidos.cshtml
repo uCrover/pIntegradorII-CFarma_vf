@@ -1,0 +1,89 @@
+﻿@using CFarma_TemplateN.Models.CustomTypes;
+
+@{
+    ViewData["Title"] = "Pedidos - Pendientes";
+    Int32 idEstado = 0;
+}
+
+<h3 class="text-center font-weight-ligh" style="font-family:Cambria ; color:blueviolet">
+    Pedidos - @ViewData["nomEP"]
+    @{
+
+        if (ViewData["idEstadoPed"] != null)
+        {
+            idEstado = (Int32)ViewData["idEstadoPed"];
+        }
+        if (idEstado != 0)
+        {
+            if (idEstado == 40)
+            {
+                <i class="far fa-pause-circle"></i>
+            }
+            if (idEstado == 41)
+            {
+                <i class="fas fa-clipboard-check"></i>
+            }
+            if (idEstado == 42)
+            {
+                <i class="far fa-window-close"></i>
+            }
+        }
+
+
+    }
+</h3>
+
+<div class="container p-2">
+
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th scope="col" class="text-center">ID Pedido</th>
+                <th scope="col" class="text-center">Nombre Cliente</th>
+                <th scope="col" class="text-center">Total Pago</th>
+                <th scope="col" class="text-center">Fecha</th>
+                <th scope="col" class="text-center">Hora</th>
+                <th scope="col" class="text-center">Forma Pago</th>
+                <th scope="col" class="text-center">Lugar Envio</th>
+                <th scope="col" class="text-center">Detalle</th>
+                @{
+                    if (idEstado == 40)
+                    {
+                        <th scope="col" class="text-center">Actualizar</th>
+                    }
+                }
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in ViewData["lisTipPed"] as List<sp_select_pedido_estados>)
+            {
+                <tr>
+                    <td class="text-center">@item.idp</td>
+                    <td class="text-center">@item.nomCli</td>
+                    <td class="text-center">@item.totalPago</td>
+                    <td class="text-center">@item.fecha</td>
+                    <td class="text-center">@item.hora</td>
+                    <td class="text-center">@item.forma_pago</td>
+                    <td class="text-center">@item.lugar_envio</td>
+                    <td class="text-center">
+                        <a asp-controller="Repartidor" asp-action="DetallePedido" asp-route-idp="@item.idp">
+                            <i class="far fa-eye"></i>
+                        </a>
+                    </td>
+                    @{
+                        if (idEstado == 40)
+                        {
+                            <th scope="col" class="text-center">
+                                <a asp-controller="Repartidor" asp-action="UpdatePedido" asp-route-idp="@item.idp" asp-route-estadoP="40" asp-route-codRep=" @ViewData["codRep"]">
+                                    <i class="fas fa-sync-alt"></i>
+                                </a>
+                            </th>
+                        }
+                    }
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>

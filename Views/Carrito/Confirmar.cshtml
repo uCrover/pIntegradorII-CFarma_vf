@@ -1,0 +1,91 @@
+﻿@model CFarma_TemplateN.Models.Pedido
+
+@{
+    ViewData["Title"] = "Confirmar";
+}
+
+<h2 align="center">Confirmar Pedido</h2>
+
+<hr />
+<form asp-action="Confirmar">
+    <div style="width: 50%; float:left">
+        <div class="row">
+            <div class="col-md-7">
+
+
+                <div class="form-group">
+                    <label class="control-label">Distritos disponibles para Delivery</label>
+                    <select class="form-control">
+                        <option>Surco</option>
+                        <option>Miraflores</option>
+                        <option>San Borja</option>
+                        <option>Callao</option>
+                        <option>Lima</option>
+                        <option>La Victoria</option>
+                        <option>San Juan de Lurigancho</option>
+                        <option>San Isidro</option>
+                        <option>San Miguel</option>
+                        <option>San Juan de Miraflores</option>
+                        <option>Villa María</option>
+                        <option>Villa el Salvador</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Dirección del Cliente</label>
+                    <input asp-for="lugar_envio" class="form-control" required />
+                    <span asp-validation-for="lugar_envio" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Nombre completo de encargado de recibir pedido</label>
+                    <input asp-for="nom_cli_recibo" class="form-control" required />
+                    <span asp-validation-for="nom_cli_recibo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">DNI del encargado</label>
+                    <input min="11111111" max="99999999" asp-for="dni_cli_recibo" class="form-control" required Columns="1" />
+                    <span asp-validation-for="dni_cli_recibo" class="text-danger"></span>
+                </div>
+                <!--max="99999999"-->
+            </div>
+        </div>
+    </div>
+
+    <div style="width: 50%; float:right">
+        <div class="row">
+            <div class="col-md-8">
+                <div align="center">
+                    <img src="~/img/visa.png" width="200" height="100" />
+                </div>
+                <br>
+                <div class="form-group">
+                    <label class="control-label">Número de Tarjeta</label>
+                    <input type="number" min="1111111111111111" max="9999999999999999" class="form-control" required Columns="1"/>
+                    <!--max="9999999999999999"-->
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Fecha de Expiración</label>
+                    <input type="date" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Codigo CVV</label>
+                    <input type="number" min="111" max="999" class="form-control" required Columns="1" />
+                    <!--max="999"-->
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Nombre Completo</label>
+                    <input class="form-control" required />
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Procesar Compra" class="btn btn-primary" />
+                </div>
+
+                <!--<div class="form-group">
+                    <label class="control-label">]</label>
+                    <input class="form-control" required />
+                </div>-->
+            </div>
+        </div>
+    </div>
+</form>
+

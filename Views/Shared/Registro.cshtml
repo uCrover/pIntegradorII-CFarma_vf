@@ -1,0 +1,91 @@
+﻿@model CFarma_TemplateN.Models.Cliente
+@{
+    ViewData["Title"] = "Home Page";
+}
+@{
+    ViewData["Title"] = "Registro";
+}
+
+
+<body class="bg-cabeceraRegistro">
+
+    <div class="container col-md-4">
+
+
+        <h1 class="font-weight-bold"> Crea tu cuenta gratis</h1>
+        <p class="text-muted mb-5">Ingresa la siguiente informacion para registrarse</p>
+
+        <form asp-controller="Cliente" asp-action="Registro">
+            <div>
+                <label asp-for="Nom" class="control-label"></label>
+                <input asp-for="Nom" class=" form-control" id="nombre" required />
+                <span asp-validation-for="Nom" class="text-danger"></span>
+            </div>
+            <br />
+            <div>
+                <label asp-for="Apellido" class="control-label"></label>
+                <input asp-for="Apellido" class=" form-control" id="apellido" required />
+                <span asp-validation-for="Apellido" class="text-danger"></span>
+            </div>
+            <br />
+            <div>
+                <label asp-for="Nrodoc" class="control-label"></label>
+                <input type="number" name="nrodoc" id="nrodoc" asp-for="Nrodoc" class=" form-control" onkeydown="if(this.value.length == 8) return false" required />
+                <span asp-validation-for="Nrodoc" class="text-danger"></span>
+            </div>
+            <br />
+            <div>
+                <label asp-for="Sexo" class="control-label"></label>
+                <select asp-for="Sexo" class=" form-control" id="sexo" required>
+                    <option value="">-Seleccione-</option>
+                    <option value="F">Femenino</option>
+                    <option value="M">Masculino</option>
+                </select>
+                <span asp-validation-for="Sexo" class="text-danger"></span>
+            </div>
+            <br />
+            <div>
+                <label asp-for="Movil" class="control-label"></label>
+                <input min="11111111" asp-for="Movil" class=" form-control" id="movil" required />
+                <span asp-validation-for="Movil" class="text-danger"></span>
+            </div>
+            <br />
+            <div>
+                <label asp-for="Correo" class="control-label"></label>
+                <input asp-for="Correo" class=" form-control" name="correo" id="correo" required />
+                <span asp-validation-for="Correo" class="text-danger"></span>
+            </div>
+            <br />
+            <div>
+                <label asp-for="Pswd" class="control-label"></label>
+                <input type="password" asp-for="Pswd" class=" form-control" id="pswd" required />
+                <span asp-validation-for="Pswd" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group mb-5">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="check" id="check" required>
+                    <label class="form-check-label text-muted">Acepta los términos y condiciones</label>
+                </div>
+            </div>
+            <br />
+            <div style="text-align:center;">
+                <button type="submit" class="btn btn-outline-primary">Registrar</button>
+            </div>
+
+
+        </form>
+
+
+        <small class="d-inline-block text-muted mt-5">Todos los derechos reservados</small>
+
+    </div>
+
+
+</body>
+
+
+
+
+
+

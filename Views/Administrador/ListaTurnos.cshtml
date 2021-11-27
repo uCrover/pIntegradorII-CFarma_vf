@@ -1,0 +1,43 @@
+﻿
+
+@{
+    ViewData["Title"] = "Repartidor - Turnos";
+}
+
+<div class="container">
+
+
+    <h3 class="text-center font-weight-ligh" style="font-family:Cambria ; color:darkcyan">
+        Repartidores - Turnos Asignados <i class="fas fa-stopwatch"></i>
+    </h3>
+    <br /><br />
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col" class="text-center">ID Turno</th>
+                <th scope="col" class="text-center">Día</th>
+                <th scope="col" class="text-center">Repartidor</th>
+                <th scope="col" class="text-center">Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+            @foreach (var item in ViewData["listTurnos"] as List<CFarma_TemplateN.Models.CustomTypes.sp_select_turnos>)
+            {
+            <tr>
+                <td class="text-center">@item.IDTurno </td>
+                <td class="text-center">@item.DiaSemana </td>
+                <td class="text-center">@item.NombreRepartidor </td>
+                <td class="text-center"><a asp-controller="Administrador" asp-action="EliminarTurno" asp-route-id="@item.IDTurno">
+                  <i class="fas fa-trash-alt"></i>
+             </a></td>
+            </tr>
+
+                }
+
+
+        </tbody>
+    </table>
+
+</div>

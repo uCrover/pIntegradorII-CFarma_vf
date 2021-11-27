@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Title"] = "Mi Detalle";
+    List<Carrito> carrito = ViewData["listaDetalle"] as List<Carrito>;
+    Pedido p = ViewData["pedido"] as Pedido;
+}
+
+@{
+    ViewData["Title"] = "Detalle Pedido";
+}
+
+
+<div style="background-color:azure; text-align:center; text-decoration:dashed"><h2>Detalle</h2></div>
+
+<div style="width:800px;">
+    <div style="width:300px; float:left;">
+        <table class="table">
+            <tr>
+                <td><b>Fecha que se realizó el pedido :</b></td>
+                <td>@p.fecha</td>
+            </tr>
+            <tr>
+                <td><b>Lugar de envío :</b></td>
+                <td>@p.lugar_envio</td>
+            </tr>
+            <tr>
+                <td><b>Cliente encargado de recibir pedido :</b></td>
+                <td> @p.nom_cli_recibo</td>
+            </tr>
+            <tr>
+                <td><b>DNI del encargado de recibir pedido :</b></td>
+                <td> @p.dni_cli_recibo</td>
+            </tr>
+            <tr>
+                <td colspan="2"><a href="/Pedidos/" class=" btn btn-info">Ir a mi lista pedidos</a></td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="width:300px; float:right;">
+        <table class="table mt-2">
+            <thead>
+                <tr>
+
+                    <th scope="col">N° Pedido</th>
+                    <th scope="col">Imagen</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Sub Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int cuenta = 0;
+                    decimal impTotal = 0;
+                    foreach (var item in carrito)
+                    {
+                        impTotal = impTotal + item.Total();
+                        cuenta++;
+                        <tr>
+                            <td>@cuenta</td>
+                            <td>
+                                <img src="~/img/PRODUCTOS/@item.imagen" width="90" height="100" onerror="src='/img/sinImagen.jpg'" />
+                            <td>@item.Nom</td>
+                            <td>@item.Precio</td>
+                            <td>@item.cantidad</td>
+                            <td>@item.Total()</td>
+
+                        </tr>
+                    }
+
+                    if (cuenta == 0)
+                    {
+                        <tr>
+                            <td colspan="6">No se encontraron productos</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4">
+                                <strong>Importe Total</strong>
+                            </td>
+                            <td>@impTotal</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
